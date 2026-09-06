@@ -487,6 +487,9 @@
         <button class="weave-btn" id="weave-btn">編織今晚的夢</button>
         <span class="weave-hint">已選 <b id="chip-count">0</b> / 3</span>
       </div>
+      <div class="hint-box" id="weave-hint-box" style="margin-top:20px; display:none;">
+        <b>AI 解夢提示：</b><span id="weave-hint-text"></span>僅供娛樂參考，並非心理或醫療建議。
+      </div>
     </div>
   </section>
 
@@ -588,6 +591,18 @@
     "天亮前，這些夢悄悄接在了一起，成為誰也沒讀過的故事。",
     "你張開眼睛，夢還留在指尖，像沒說完的一句話。"
   ];
+  var INTERPRETATIONS = {
+    "飛行": "常被聯想為對自由的渴望，或想暫時擺脫某種束縛",
+    "海洋": "常被聯想為情緒的流動，可能反映近期起伏的心情",
+    "迷路": "可能反映你對目前的方向或選擇感到不太確定",
+    "考試": "常與面對評價、擔心不被準備好的壓力有關",
+    "重逢": "或許反映你最近想起了某個人或某段關係",
+    "動物": "常被視為直覺與本能的象徵，可能是潛意識想提醒你的事",
+    "老家": "常與根源、童年記憶或想找回安全感有關",
+    "追逐": "可能反映對時間、進度或未完成事務的焦慮",
+    "光": "常被聯想為希望與指引，或心境即將明朗的預兆",
+    "遲到": "常與擔心失控、來不及掌握某件事有關"
+  };
   var AVATAR_COLORS = ["#1f9c8c","#e8527a","#8b7bd8","#d6a94a","#5b8fd6"];
   var AVATAR_LETTERS = ["夢","旅","潮","星","風","夜"];
 
@@ -631,6 +646,17 @@
     tagsEl.innerHTML = kws.map(function(k){ return "<span>#" + k + "</span>"; }).join("");
 
     renderAvatars(count);
+    renderInterpretation(kws);
+  }
+
+  function renderInterpretation(kws){
+    var box = document.getElementById("weave-hint-box");
+    var textEl = document.getElementById("weave-hint-text");
+    var text = kws.map(function(kw){
+      return "「" + kw + "」" + (INTERPRETATIONS[kw] || "常被視為潛意識想傳達的某種訊息") + "；";
+    }).join("");
+    textEl.textContent = text;
+    box.style.display = "block";
   }
 
   function renderAvatars(count){
